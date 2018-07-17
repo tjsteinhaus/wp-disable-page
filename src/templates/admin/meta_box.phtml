@@ -24,7 +24,7 @@ $url = get_post_meta( $post->ID, 'wp_disable_page__url', true );
         name="wp_disable_page__url" 
         style="width: 100%;" 
         value="<?php echo $url; ?>" />
-    <span class="description">To redirect to the homepage, enter in /</span>
+    <span class="description">If left blank, the page will 404.<br /> e.g.: To redirect to the homepage, enter in /</span>
 </p>
 <!-- WP Nonce (Very Important - DO NOT REMOVE) -->
 <?php wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME ); ?>

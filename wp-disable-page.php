@@ -21,9 +21,20 @@ spl_autoload_register( function( $class ) {
 
     if( strpos( $class, __NAMESPACE__ ) !== 0 ) return;
 
+    // modify the file structure to support lowercase folders
     $class = str_replace( __NAMESPACE__, '', $class );
+    $path = str_replace( '\\', DIRECTORY_SEPARATOR, $class );
+    $split_path = explode( DIRECTORY_SEPARATOR, $class );
+    if( count( $split_path ) > 2 ) {
+        $file_name = $split_path[count($split_path)-1];
+        unset( $split_path[count($split_path)-1] );
+        $split_path = array_map( 'strtolower', $split_path );
+        $path = implode( DIRECTORY_SEPARATOR, $split_path );
 
-    $path = __DIR__ . '/src' . str_replace( '\\', DIRECTORY_SEPARATOR, $class ) . '.php';
+        $path = __DIR__ . DIRECTORY_SEPARATOR . 'src' . $path . DIRECTORY_SEPARATOR . $file_name . '.php';
+    } else {
+        $path = __DIR__ . DIRECTORY_SEPARATOR . 'src' . $path . '.php';
+    } 
 
     require_once( $path );
 } );

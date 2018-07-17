@@ -1,5 +1,5 @@
 <?php
-$is_checked = (int) get_post_meta( $post->ID, 'wp_disable_page__is_disabled', true );
+$is_checked = (bool) get_post_meta( $post->ID, 'wp_disable_page__is_disabled', true );
 $url = get_post_meta( $post->ID, 'wp_disable_page__url', true );
 ?>
 <p>
@@ -15,7 +15,7 @@ $url = get_post_meta( $post->ID, 'wp_disable_page__url', true );
     </label><br />
     <span class="description">By disabling the page you can choose if you want to redirect it or let it 404.</span>
 </p>
-<p id="wp_disable_page__is_disabled_check" <?php echo ( empty( $is_checked ) || $is_checked == 0 ) ? 'style="display: none;"' : ''; ?>>
+<p id="wp_disable_page__is_disabled_check" <?php echo ( empty( $is_checked ) || !$is_checked ) ? 'style="display: none;"' : ''; ?>>
     <label for="wp_disable_page_url">
         <strong>Redirect To:</strong>
     </label><br />

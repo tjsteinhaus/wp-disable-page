@@ -7,7 +7,7 @@ class CreateMetaBox {
     /**
      * Available on which post types
      */
-    const POST_TYPES = 'page';
+    const POST_TYPES = array( 'post', 'page' );
 
     /**
      * Where should the box be displayed?
@@ -51,7 +51,7 @@ class CreateMetaBox {
             \WPDisablePage\Setup::PLUGIN_ID, // Metabox ID
             \WPDisablePage\Setup::PLUGIN_NAME, // Metabox Name
             array( __CLASS__, 'createView' ), // Metabox Callback
-            self::POST_TYPES, // Metabox Post Types
+            apply_filters( strtolower( \WPDisablePage\Setup::PLUGIN_ID ) . '__post_types', self::POST_TYPES ), // Metabox Post Types
             self::POSITION, // Metabox Position
             self::PRIORITY // Metabox Priority
         );

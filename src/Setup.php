@@ -34,19 +34,38 @@ class Setup {
     public function setupFrontend() {
         global $post, $wp_query;
 
-        $is_disabled = (bool) get_post_meta( $post->ID, 'wp_disable_page__is_disabled', true );
-        if( $is_disabled ) {
-            $redirect_url = get_post_meta( $post->ID, 'wp_disable_page__url', true );
+        add_action( 'pre_get_posts', array( __CLASS__, 'modifyWPQuery' ) );
 
-            if( !empty( $redirect_url ) ) {
-                header("HTTP/1.1 301 Moved Permanently"); 
-                header( 'Location: ' . $redirect_url );
-            } else {
-                $wp_query->set_404();
-                status_header( 404 );
-                get_template_part( 404 );
+        if( is_single() || is_page() ) {
+            $is_disabled = (bool) get_post_meta( $post->ID, 'wp_disable_page__is_disabled', true );
+            if( $is_disabled ) {
+                $redirect_url = get_post_meta( $post->ID, 'wp_disable_page__url', true );
+
+                if( !empty( $redirect_url ) ) {
+                    header("HTTP/1.1 301 Moved Permanently"); 
+                    header( 'Location: ' . $redirect_url );
+                } else {
+                    $wp_query->set_404();
+                    status_header( 404 );
+                    get_template_part( 404 );
+                }
             }
         }
     }
 
+    /**
+     * Modify the WP Query so we never see disabled pages
+     * 
+     * @since 07/18/2018
+     * @author Tyler Steinhaus
+     */
+    public function modifyWPQuery( $query ) {   
+        if( !is_admin() ) {
+            global $wpdb;
+
+            $exclude_posts = $wpdb->get_col( "SELECT post_id from $wpdb->postmeta WHERE meta_key = 'wp_disable_page__is_disabled' && meta_value = '1'" );
+
+            $query->set( 'post__not_in', $exclude_posts );
+        }
+    }
 }

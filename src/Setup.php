@@ -34,6 +34,10 @@ class Setup {
     public function setupFrontend() {
         global $post, $wp_query;
 
+        if( !in_array( $post->post_type, \WPRoleSpecificContent\Admin\CreateMetaBox::POST_TYPES ) ) {
+            return false;
+        }
+
         add_action( 'pre_get_posts', array( __CLASS__, 'modifyWPQuery' ) );
 
         if( is_single() || is_page() ) {

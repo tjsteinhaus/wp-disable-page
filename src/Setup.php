@@ -34,7 +34,7 @@ class Setup {
     public function setupFrontend() {
         global $post, $wp_query;
 
-        if( !in_array( $post->post_type, \WPRoleSpecificContent\Admin\CreateMetaBox::POST_TYPES ) ) {
+        if( !in_array( $post->post_type, \WPDisablePage\Admin\CreateMetaBox::POST_TYPES ) ) {
             return false;
         }
 

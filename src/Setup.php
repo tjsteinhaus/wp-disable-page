@@ -20,7 +20,7 @@ class Setup {
     /**
      * Initialization of the plugin
      */
-    public function init() {
+    public static function init() {
         \WPDisablePage\Admin\CreateMetaBox::init();
         add_action( 'wp', array( __CLASS__, 'setupFrontend' ) );
     }
@@ -31,7 +31,7 @@ class Setup {
      * @since 07/17/2018
      * @author Tyler Steinhaus
      */
-    public function setupFrontend() {
+    public static function setupFrontend() {
         global $post, $wp_query;
 
         if( !in_array( $post->post_type, \WPDisablePage\Admin\CreateMetaBox::POST_TYPES ) ) {
@@ -63,7 +63,7 @@ class Setup {
      * @since 07/18/2018
      * @author Tyler Steinhaus
      */
-    public function modifyWPQuery( $query ) {   
+    public static function modifyWPQuery( $query ) {   
         if( !is_admin() ) {
             global $wpdb;
 

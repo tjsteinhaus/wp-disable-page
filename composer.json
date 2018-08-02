@@ -1,0 +1,26 @@
+{
+    "name": "tjsteinhaus/wp-disable-page",
+    "description": "Have you ever wanted to retract content quick and easy and setup a redirect? Many times I have add to do this and there was no quick and easy way. Well with WP Disable Page you can do it within seconds. ",
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "source"
+    },
+    "authors": [
+        {
+            "name": "Tyler Steinhaus",
+            "email": "tjsteinhaus@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WPDisablePage\\": "src/"
+        },
+        "files": [
+
+        ]
+    },
+    "minimum-stability": "stable"
+}

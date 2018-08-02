@@ -22,7 +22,10 @@ class Setup {
      */
     public static function init() {
         \WPDisablePage\Admin\CreateMetaBox::init();
-        add_action( 'wp', array( __CLASS__, 'setupFrontend' ) );
+
+        if( !is_admin() ) {
+            add_action( 'wp', array( __CLASS__, 'setupFrontend' ) );
+        }
     }
 
     /**
